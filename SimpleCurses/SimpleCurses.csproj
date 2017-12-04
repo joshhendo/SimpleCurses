@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\RenderableDot.cs" />
     <Compile Include="Rendering\RenderableDotGenerator.cs" />
+    <Compile Include="Views\ConfirmationBoxView.cs" />
     <Compile Include="Views\MenuView.cs" />
     <Compile Include="Views\MessageBoxView.cs" />
     <Compile Include="Views\MultipleQuestionsView.cs" />

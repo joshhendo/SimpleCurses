@@ -18,13 +18,14 @@ namespace SimpleCurses.Views
         }
 
         public event ViewEventHandler Finished;
+        protected virtual void OnFinished(IRenderable sender, object data) => Finished?.Invoke(sender, data);
 
-        public void HandleKeyPress(ConsoleKeyInfo key)
+        public virtual void HandleKeyPress(ConsoleKeyInfo key)
         {
             switch (key.Key)
             {
                 case ConsoleKey.Enter:
-                    Finished.Invoke(this, null);
+                    Finished?.Invoke(this, null);
                     break;
             }
         }
@@ -49,6 +50,15 @@ namespace SimpleCurses.Views
             return output.ToArray();
         }
 
+        protected virtual void GetButtons(RenderableDotGenerator generator)
+        {
+            var fullButton = $"  {buttonLabel}  ";
+            var buttonWidth = fullButton.Length;
+            
+            generator.SetX((Console.WindowWidth / 2) - buttonWidth / 2);
+            generator.Write(fullButton, ConsoleColor.Blue);
+        }
+
         public RenderableDot[][] GetRenderable()
         {
             var generator = new RenderableDotGenerator();
@@ -69,9 +79,11 @@ namespace SimpleCurses.Views
             
             generator.IncrementY();
 
-            var buttonWidth = buttonLabel.Length + 4;
+            /*var buttonWidth = buttonLabel.Length + 4;
             generator.SetX((Console.WindowWidth / 2) - buttonWidth/2);
-            generator.Write($"  {buttonLabel}  ", ConsoleColor.Blue);
+            generator.Write($"  {buttonLabel}  ", ConsoleColor.Blue);*/
+
+            GetButtons(generator);
 
             return generator.GetRenderableDots();
         }

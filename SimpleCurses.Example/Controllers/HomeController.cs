@@ -10,7 +10,7 @@ namespace SimpleCurses.Example.Controllers
 
         public HomeController()
         {
-            menuView = new MenuView(new [] {"Show a Message Box", "Ask me Some Questions"});
+            menuView = new MenuView(new [] {"Show a Message Box", "Ask me Some Questions", "Show me a confirmation prompt"});
             menuView.Finished += HandleSelection;
 
             currentView = menuView;
@@ -26,6 +26,10 @@ namespace SimpleCurses.Example.Controllers
                     break;
                 case 1:
                     currentView = new MultipleQuestionsView(new [] {"What is your name?", "Where do you live?"});
+                    currentView.Finished += (renderable, response) => { currentView = menuView; };
+                    break;
+                case 2:
+                    currentView = new ConfirmationBoxView("Select an option", new [] {"First Button!", "Something", "Else"});
                     currentView.Finished += (renderable, response) => { currentView = menuView; };
                     break;
             }
